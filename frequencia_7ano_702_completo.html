@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#203a63">
+<title>Frequência Escolar — 7º Ano 702</title>
+<style>
+:root{--p:#203a63;--p2:#31598e;--gold:#c8a451;--bg:#f4f6f9;--card:#fff;--txt:#202a38;--mut:#687386;--line:#dfe4ec;--red:#c44141;--green:#287a58;--orange:#b87916}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:Arial,Helvetica,sans-serif}
+header{background:linear-gradient(135deg,var(--p),var(--p2));color:white;padding:20px 16px 0;box-shadow:0 4px 18px #1d345522}.head{max-width:1200px;margin:auto}.school{font-size:12px;font-weight:700;letter-spacing:.45px;opacity:.9}.title{font-size:25px;font-weight:800;margin:5px 0}.sub{font-size:13px;opacity:.9}
+nav{display:flex;gap:6px;margin-top:17px;overflow:auto}nav button{border:0;background:#ffffff18;color:white;padding:11px 14px;border-radius:9px 9px 0 0;white-space:nowrap;font-weight:700}nav button.active{background:white;color:var(--p)}
+main{max-width:1200px;margin:18px auto;padding:0 14px}.tab{display:none}.tab.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:white;border:1px solid var(--line);border-radius:13px;padding:16px;box-shadow:0 4px 15px #263b5710;margin-bottom:14px}
+.stat .lbl{font-size:11px;text-transform:uppercase;color:var(--mut);font-weight:700}.stat .val{font-size:26px;font-weight:800;color:var(--p);margin-top:4px}.stat.red .val{color:var(--red)}
+h2{font-size:18px;margin:0 0 12px}.hint{font-size:13px;color:var(--mut);line-height:1.5}.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:150px}label{font-size:11px;color:var(--mut);font-weight:700;text-transform:uppercase}
+input,select{width:100%;padding:10px;border:1px solid #cdd5e1;border-radius:8px;background:white;color:var(--txt)}button{font:inherit;cursor:pointer}.btn{border:0;border-radius:8px;padding:10px 13px;font-weight:700}.primary{background:var(--p);color:white}.secondary{background:#edf1f6;color:var(--p)}.danger{background:#fbeaea;color:var(--red)}.green{background:#e9f5ef;color:var(--green)}
+.table{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:700px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{background:#f0f3f7;color:#566277;font-size:10px;text-transform:uppercase}tr:last-child td{border:0}.name{font-weight:700}.abs{background:#fff6f6}.check{width:19px;height:19px;accent-color:var(--red)}
+.badge{padding:4px 8px;border-radius:15px;font-size:10px;font-weight:800;display:inline-block}.bgreen{background:#e8f5ef;color:var(--green)}.bred{background:#fbe9e9;color:var(--red)}.borange{background:#fff3dc;color:var(--orange)}
+.actions{display:flex;gap:5px;flex-wrap:wrap}.mini{padding:6px 8px;border:0;border-radius:7px;font-size:11px;font-weight:700}
+.schedule{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.day{border:1px solid var(--line);border-radius:10px;overflow:hidden}.day h3{margin:0;background:#edf1f6;color:var(--p);padding:10px;font-size:14px}.lesson{padding:9px;border-top:1px solid var(--line);font-size:12px}.lesson b{display:block;color:var(--mut);font-size:10px;margin-bottom:3px}
+.empty{text-align:center;color:var(--mut);padding:28px}.notice{padding:10px 12px;border-radius:9px;background:#fff8e7;color:#795b18;font-size:12px;margin-bottom:12px}
+.bim-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.bim{border:1px solid var(--line);padding:13px;border-radius:10px}.bim strong{display:block;color:var(--p);margin-bottom:8px}.bim .big{font-size:23px;font-weight:800}.progress{height:7px;background:#e9edf2;border-radius:9px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:var(--p)}
+.toast{position:fixed;right:16px;bottom:16px;background:#202a38;color:white;padding:12px 15px;border-radius:9px;display:none;z-index:20}
+.modal{display:none;position:fixed;inset:0;background:#111b2a88;z-index:10;padding:15px;overflow:auto}.modal.open{display:flex;align-items:center;justify-content:center}.modalbox{background:white;border-radius:14px;width:min(760px,100%);padding:18px;max-height:90vh;overflow:auto}.close{float:right;border:0;border-radius:50%;width:32px;height:32px}
+footer{max-width:1200px;margin:auto;padding:5px 14px 25px;color:var(--mut);font-size:11px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.schedule{grid-template-columns:1fr 1fr}.bim-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.grid{grid-template-columns:1fr 1fr;gap:8px}.card{padding:12px}.row .btn{width:100%}.field{min-width:100%}.schedule{grid-template-columns:1fr}.title{font-size:20px}}
+</style>
+</head>
+<body>
+<header><div class="head">
+<div class="school">ESCOLA MUNICIPAL “DR. CUSTÓDIO DE PAULA RODRIGUES”</div>
+<div class="title">Controle de Frequência — 7º ANO • 702</div><div class="sub">MATUTINO • Frequência diária por disciplina</div>
+<nav>
+<button class="active" data-tab="lancar">Lançar</button><button data-tab="historico">Histórico</button><button data-tab="relatorios">Relatórios</button><button data-tab="alunos">Alunos</button><button data-tab="horario">Horário</button><button data-tab="dados">Dados</button>
+</nav></div></header>
+
+<main>
+<section id="lancar" class="tab active">
+<div class="grid">
+<div class="card stat"><div class="lbl">Alunos</div><div class="val" id="nAlunos">16</div></div>
+<div class="card stat red"><div class="lbl">Faltas lançadas</div><div class="val" id="nFaltas">0</div></div>
+<div class="card stat"><div class="lbl">Dias com registro</div><div class="val" id="nDias">0</div></div>
+<div class="card stat"><div class="lbl">Aulas registradas</div><div class="val" id="nAulas">0</div></div>
+</div>
+<div class="card">
+<h2>Novo lançamento</h2><div class="notice">Selecione a data e o horário. Você pode lançar mais de uma aula da mesma disciplina no mesmo dia.</div>
+<div class="row"><div class="field"><label>Data</label><input type="date" id="data"></div><div class="field"><label>Aula</label><select id="aula"></select></div><button class="btn primary" id="carregar">Abrir lista</button></div>
+</div>
+<div class="card" id="listaCard" style="display:none">
+<h2 id="listaTitulo">Frequência</h2><div class="hint" id="listaSub"></div>
+<div class="row" style="margin:12px 0"><button class="btn secondary" id="marcarTodos">Marcar todos como falta</button><button class="btn secondary" id="desmarcar">Marcar todos presentes</button><span style="flex:1"></span><button class="btn primary" id="salvar">Salvar lançamento</button></div>
+<div class="table"><table><thead><tr><th>Nº</th><th>Aluno</th><th>Falta</th><th>Situação</th></tr></thead><tbody id="lista"></tbody></table></div>
+</div>
+</section>
+
+<section id="historico" class="tab">
+<div class="card"><h2>Lançamentos realizados</h2><div class="hint">Aqui você pode abrir, alterar ou excluir qualquer aula já registrada.</div></div>
+<div class="card"><div class="table"><table><thead><tr><th>Data</th><th>Dia</th><th>Horário</th><th>Disciplina</th><th>Faltas</th><th>Ações</th></tr></thead><tbody id="hist"></tbody></table></div></div>
+</section>
+
+<section id="relatorios" class="tab">
+<div class="card"><h2>Relatório detalhado de faltas</h2><div class="row">
+<div class="field"><label>Aluno</label><select id="rAluno"></select></div><div class="field"><label>Disciplina</label><select id="rDisc"></select></div><div class="field"><label>De</label><input type="date" id="rIni"></div><div class="field"><label>Até</label><input type="date" id="rFim"></div><button class="btn secondary" id="filtrar">Filtrar</button><button class="btn secondary" id="csv">Exportar CSV</button>
+</div></div>
+<div class="card"><div class="table"><table><thead><tr><th>Data</th><th>Horário</th><th>Disciplina</th><th>Aluno</th></tr></thead><tbody id="rTabela"></tbody></table></div></div>
+<div class="card"><h2>Resumo por disciplina</h2><div class="table"><table><thead><tr><th>Disciplina</th><th>Aulas</th><th>Faltas</th><th>Alunos faltosos</th></tr></thead><tbody id="rResumo"></tbody></table></div></div>
+</section>
+
+<section id="alunos" class="tab">
+<div class="card"><h2>Frequência individual dos alunos</h2><div class="table"><table><thead><tr><th>Nº</th><th>Aluno</th><th>Faltas</th><th>Presenças</th><th>Taxa de presença</th><th>Detalhar</th></tr></thead><tbody id="aTabela"></tbody></table></div></div>
+</section>
+
+<section id="horario" class="tab"><div class="card"><h2>Horário semanal — 702 Matutino</h2><div class="schedule" id="grade"></div></div></section>
+
+<section id="dados" class="tab">
+<div class="card"><h2>Gerenciamento dos dados</h2><p class="hint">Os registros ficam salvos neste navegador. Faça um backup regularmente para não perder os lançamentos.</p>
+<div class="row"><button class="btn primary" id="backup">Baixar backup</button><button class="btn secondary" id="restaurarBtn">Restaurar backup</button><input type="file" id="arquivo" accept=".json" style="display:none"><button class="btn danger" id="apagar">Apagar todos os lançamentos</button></div>
+</div>
+<div class="card"><h2>Estrutura da turma</h2><div class="hint">Turma: <b>7º ANO — 702</b> • Turno: <b>Matutino</b> • Total: <b>16 alunos</b></div></div>
+</section>
+</main>
+<footer>Controle local de frequência • 7º Ano 702 • Os dados não são enviados para servidor.</footer>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="modalbox"><button class="close" id="fechar">×</button><h2 id="modalTitulo">Detalhes</h2><div id="modalConteudo"></div></div></div>
+
+<script>
+const alunos=[
+"ADRYAN MENDES LIMA","DAVI LUCAS PAULINO DA COSTA","DAVI LUCAS MONTEIRO ROZA","DAVI QUEIROZ SILVA",
+"EMANUEL GOMES DE QUEIROZ","EDYLSON ANTÔNIO DO CARMO SOARES","JÚLIA DE OLIVEIRA PEREIRA","JOÃO VITOR DE ARAÚJO OLIVEIRA",
+"LUCAS ESTEVAN DE QUEIROZ FREITAS","LUIZ MIGUEL DE QUEIROZ FREITAS","MARIA LUIZA PEREIRA SAMPAIO","MARIA PAULA ALVES PEREIRA",
+"MELLYNA VITÓRIA S. DE MELO","NATHAN FIALHO LIMA","RILLARY VITÓRIA APARECIDA DA SILVA SALGADO","VICTOR GABRIEL QUEIROZ SANTOS"].sort((a,b)=>a.localeCompare(b,"pt-BR"));
+
+const horario={
+"Segunda-feira":[["1º","07:00 - 07:50","Arte"],["2º","07:50 - 08:40","História"],["3º","08:40 - 09:30","Português"],["4º","09:50 - 10:40","Ed. Física"],["5º","10:40 - 11:30","Português"]],
+"Terça-feira":[["1º","07:00 - 07:50","Matemática"],["2º","07:50 - 08:40","Ciências"],["3º","08:40 - 09:30","Português"],["4º","09:50 - 10:40","Geografia"],["5º","10:40 - 11:30","Matemática"]],
+"Quarta-feira":[["1º","07:00 - 07:50","Português"],["2º","07:50 - 08:40","Matemática"],["3º","08:40 - 09:30","História"],["4º","09:50 - 10:40","Ciências"],["5º","10:40 - 11:30","Inglês"]],
+"Quinta-feira":[["1º","07:00 - 07:50","Geografia"],["2º","07:50 - 08:40","Inglês"],["3º","08:40 - 09:30","Matemática"],["4º","09:50 - 10:40","História"],["5º","10:40 - 11:30","Ciências"]],
+"Sexta-feira":[["1º","07:00 - 07:50","Português"],["2º","07:50 - 08:40","Matemática"],["3º","08:40 - 09:30","Redação"],["4º","09:50 - 10:40","Ed. Física"],["5º","10:40 - 11:30","Ens. Religioso"]]
+};
+const disciplinas=[...new Set(Object.values(horario).flat().map(x=>x[2]))].sort((a,b)=>a.localeCompare(b,"pt-BR"));
+const KEY="frequencia_7ano_702_completa_v2";
+let registros=JSON.parse(localStorage.getItem(KEY)||"[]");
+let editando=null;
+
+const $=id=>document.getElementById(id);
+function hoje(){let d=new Date(),x=new Date(d-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)}
+$("data").value=hoje();
+
+function dia(data){return new Date(data+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long"}).replace(/^./,c=>c.toUpperCase())}
+function dataBR(d){return d.split("-").reverse().join("/")}
+function toast(s){$("toast").textContent=s;$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",2200)}
+function idRegistro(data,ordem){return data+"__"+ordem}
+function aulasDia(data){return horario[dia(data)]||[]}
+function preencherAulas(){
+ let sel=$("aula");sel.innerHTML="";
+ aulasDia($("data").value).forEach((a)=>{let o=document.createElement("option");o.value=a[0]+"|"+a[1]+"|"+a[2];o.textContent=a[0]+" • "+a[1]+" • "+a[2];sel.appendChild(o)});
+ if(!sel.options.length){let o=document.createElement("option");o.value="";o.textContent="Não há aulas para esta data";sel.appendChild(o)}
+}
+$("data").onchange=preencherAulas;preencherAulas();
+
+function abrirLista(){
+ let v=$("aula").value;if(!v){toast("Selecione uma aula.");return}
+ let [ordem,time,disc]=v.split("|"),data=$("data").value,id=idRegistro(data,ordem);
+ let r=registros.find(x=>x.id===id);editando=id;
+ $("listaCard").style.display="block";$("listaTitulo").textContent=(r?"Editar":"Lançar")+" frequência — "+disc;
+ $("listaSub").textContent=dia(data)+" • "+dataBR(data)+" • "+ordem+" horário • "+time;
+ $("lista").innerHTML="";
+ alunos.forEach((n,i)=>{
+  let falta=r?.faltas.includes(n)||false,tr=document.createElement("tr");if(falta)tr.className="abs";
+  tr.innerHTML=`<td>${i+1}</td><td class="name">${n}</td><td><input class="check" type="checkbox" data-nome="${n}" ${falta?"checked":""}></td><td><span class="badge ${falta?"bred":"bgreen"}">${falta?"FALTA":"PRESENTE"}</span></td>`;
+  tr.querySelector(".check").onchange=e=>{tr.className=e.target.checked?"abs":"";let b=tr.querySelector(".badge");b.className="badge "+(e.target.checked?"bred":"bgreen");b.textContent=e.target.checked?"FALTA":"PRESENTE"};
+  $("lista").appendChild(tr)
+ });
+ $("listaCard").scrollIntoView({behavior:"smooth",block:"start"});
+}
+$("carregar").onclick=abrirLista;
+function marcar(v){document.querySelectorAll("#lista .check").forEach(c=>{c.checked=v;c.dispatchEvent(new Event("change"))})}
+$("marcarTodos").onclick=()=>marcar(true);$("desmarcar").onclick=()=>marcar(false);
+$("salvar").onclick=()=>{
+ if(!editando)return;let faltas=[...document.querySelectorAll("#lista .check:checked")].map(x=>x.dataset.nome);
+ let [data,ordem]=editando.split("__"),old=registros.find(x=>x.id===editando),parts=$("aula").value.split("|");
+ let item={id:editando,data,ordem,time:parts[1],disc:parts[2],faltas};
+ let i=registros.findIndex(x=>x.id===editando);if(i>=0)registros[i]=item;else registros.push(item);
+ salvar();toast("Lançamento salvo com sucesso.");render();
+};
+
+function salvar(){registros.sort((a,b)=>(a.data+a.ordem).localeCompare(b.data+b.ordem));localStorage.setItem(KEY,JSON.stringify(registros))}
+function renderStats(){
+ $("nAlunos").textContent=alunos.length;$("nFaltas").textContent=registros.reduce((s,r)=>s+r.faltas.length,0);
+ $("nDias").textContent=new Set(registros.map(r=>r.data)).size;$("nAulas").textContent=registros.length
+}
+function renderHistorico(){
+ let tb=$("hist");tb.innerHTML="";
+ if(!registros.length){tb.innerHTML='<tr><td colspan="6" class="empty">Nenhum lançamento realizado.</td></tr>';return}
+ registros.forEach(r=>{
+  tb.innerHTML+=`<tr><td>${dataBR(r.data)}</td><td>${dia(r.data)}</td><td>${r.ordem} • ${r.time}</td><td class="name">${r.disc}</td><td><span class="badge ${r.faltas.length?"bred":"bgreen"}">${r.faltas.length}</span></td><td class="actions"><button class="mini secondary" onclick="editar('${r.id}')">Editar</button><button class="mini danger" onclick="excluir('${r.id}')">Excluir</button></td></tr>`
+ })
+}
+window.editar=id=>{let r=registros.find(x=>x.id===id);$("data").value=r.data;preencherAulas();$("aula").value=r.ordem+"|"+r.time+"|"+r.disc;document.querySelector('[data-tab="lancar"]').click();abrirLista()};
+window.excluir=id=>{if(confirm("Excluir este lançamento?")){registros=registros.filter(x=>x.id!==id);salvar();render();toast("Lançamento excluído.")}};
+
+function filtros(){
+ let oldA=$("rAluno").value,oldD=$("rDisc").value;
+ $("rAluno").innerHTML='<option value="">Todos os alunos</option>'+alunos.map(n=>`<option>${n}</option>`).join("");
+ $("rDisc").innerHTML='<option value="">Todas as disciplinas</option>'+disciplinas.map(n=>`<option>${n}</option>`).join("");
+ $("rAluno").value=oldA;$("rDisc").value=oldD
+}
+function renderRel(){
+ let fa=$("rAluno").value,fd=$("rDisc").value,ini=$("rIni").value,fim=$("rFim").value,rows=[];
+ registros.forEach(r=>r.faltas.forEach(n=>{if(fa&&n!==fa)return;if(fd&&r.disc!==fd)return;if(ini&&r.data<ini)return;if(fim&&r.data>fim)return;rows.push([r.data,r.time,r.disc,n])}));
+ rows.sort((a,b)=>(a[0]+a[3]).localeCompare(b[0]+b[3]));
+ $("rTabela").innerHTML=rows.length?rows.map(x=>`<tr><td>${dataBR(x[0])}</td><td>${x[1]}</td><td>${x[2]}</td><td class="name">${x[3]}</td></tr>`).join(""):'<tr><td colspan="4" class="empty">Nenhuma falta encontrada.</td></tr>';
+ $("rResumo").innerHTML=disciplinas.map(d=>{let rs=registros.filter(r=>r.disc===d),f=rs.reduce((s,r)=>s+r.faltas.length,0),p=new Set(rs.flatMap(r=>r.faltas)).size;return `<tr><td class="name">${d}</td><td>${rs.length}</td><td>${f}</td><td>${p}</td></tr>`}).join("")
+}
+$("filtrar").onclick=renderRel;
+$("csv").onclick=()=>{
+ let rows=[["Data","Dia","Horário","Disciplina","Aluno"]];
+ registros.forEach(r=>r.faltas.forEach(n=>rows.push([r.data,dia(r.data),r.time,r.disc,n])));
+ let csv=rows.map(r=>r.map(x=>`"${String(x).replaceAll('"','""')}"`).join(";")).join("\n"),blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="faltas_7ano_702.csv";a.click()
+};
+function renderAlunos(){
+ let tb=$("aTabela"),totalAulas=registros.length;tb.innerHTML="";
+ alunos.forEach((n,i)=>{let f=registros.filter(r=>r.faltas.includes(n)).length,pres=Math.max(0,totalAulas-f),tax=totalAulas?Math.round(pres/totalAulas*100):0;
+ tb.innerHTML+=`<tr><td>${i+1}</td><td class="name">${n}</td><td><span class="badge ${f?"bred":"bgreen"}">${f}</span></td><td>${pres}</td><td>${tax}%</td><td><button class="mini secondary" onclick="detalhar('${n.replaceAll("'","\\'")}')">Ver</button></td></tr>`})
+}
+window.detalhar=n=>{let rs=registros.filter(r=>r.faltas.includes(n));$("modalTitulo").textContent=n;$("modalConteudo").innerHTML=rs.length?`<div class="table"><table><thead><tr><th>Data</th><th>Horário</th><th>Disciplina</th></tr></thead><tbody>${rs.map(r=>`<tr><td>${dataBR(r.data)}</td><td>${r.ordem} • ${r.time}</td><td>${r.disc}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Nenhuma falta registrada para este aluno.</div>';$("modal").classList.add("open")};
+$("fechar").onclick=()=>$("modal").classList.remove("open");$("modal").onclick=e=>{if(e.target.id==="modal")$("modal").classList.remove("open")};
+
+function renderHorario(){$("grade").innerHTML=Object.entries(horario).map(([d,a])=>`<div class="day"><h3>${d}</h3>${a.map(x=>`<div class="lesson"><b>${x[0]} • ${x[1]}</b>${x[2]}</div>`).join("")}</div>`).join("")}
+$("backup").onclick=()=>{let obj={versao:2,turma:"7º ANO - 702",turno:"MATUTINO",geradoEm:new Date().toISOString(),registros};let blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup_frequencia_702.json";a.click();toast("Backup baixado.")};
+$("restaurarBtn").onclick=()=>$("arquivo").click();
+$("arquivo").onchange=e=>{let f=e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{let x=JSON.parse(rd.result),rs=Array.isArray(x)?x:x.registros;if(!Array.isArray(rs))throw 0;if(confirm("Substituir os lançamentos atuais pelo backup?")){registros=rs;salvar();render();toast("Backup restaurado.")}}catch{alert("Arquivo de backup inválido.")}};rd.readAsText(f);e.target.value=""};
+$("apagar").onclick=()=>{if(registros.length&&confirm("ATENÇÃO: apagar todos os lançamentos desta turma neste navegador?")){registros=[];salvar();render();toast("Todos os lançamentos foram apagados.")}};
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));$(b.dataset.tab).classList.add("active");render()});
+function render(){renderStats();renderHistorico();filtros();renderRel();renderAlunos();renderHorario()}
+render();
+</script>
+</body>
+</html>
