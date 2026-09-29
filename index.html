@@ -42,10 +42,19 @@ footer{max-width:1200px;margin:auto;padding:5px 14px 25px;color:var(--mut);font-
 <div class="card stat red"><div class="lbl">Faltas lançadas</div><div class="val" id="nFaltas">0</div></div>
 <div class="card stat"><div class="lbl">Dias com registro</div><div class="val" id="nDias">0</div></div>
 <div class="card stat"><div class="lbl">Aulas registradas</div><div class="val" id="nAulas">0</div></div>
+<div class="card stat red"><div class="lbl">Aulas perdidas no dia</div><div class="val" id="nPerdidasDia">0</div></div>
 </div>
 <div class="card">
 <h2>Novo lançamento</h2><div class="notice">Selecione a data e o horário. Você pode lançar mais de uma aula da mesma disciplina no mesmo dia.</div>
-<div class="row"><div class="field"><label>Data</label><input type="date" id="data"></div><div class="field"><label>Aula</label><select id="aula"></select></div><button class="btn primary" id="carregar">Abrir lista</button></div>
+<div class="row"><div class="field"><label>Data</label><input type="date" id="data"></div><div class="field"><label>Bimestre</label><select id="bimestre"><option value="1">1º Bimestre</option><option value="2">2º Bimestre</option><option value="3">3º Bimestre</option><option value="4">4º Bimestre</option></select></div><div class="field"><label>Aula</label><select id="aula"></select></div><button class="btn primary" id="carregar">Abrir lista</button></div>
+</div>
+<div class="card" id="diaResumo" style="display:none">
+<h2>Resumo do dia</h2>
+<div class="grid" style="grid-template-columns:repeat(3,1fr)">
+<div><div class="hint">Aulas lançadas no dia</div><strong id="diaAulas" style="font-size:24px;color:var(--p)">0</strong></div>
+<div><div class="hint">Faltas no dia</div><strong id="diaFaltas" style="font-size:24px;color:var(--red)">0</strong></div>
+<div><div class="hint">Alunos que perderam aula</div><strong id="diaAlunos" style="font-size:24px;color:var(--p)">0</strong></div>
+</div>
 </div>
 <div class="card" id="listaCard" style="display:none">
 <h2 id="listaTitulo">Frequência</h2><div class="hint" id="listaSub"></div>
@@ -56,14 +65,19 @@ footer{max-width:1200px;margin:auto;padding:5px 14px 25px;color:var(--mut);font-
 
 <section id="historico" class="tab">
 <div class="card"><h2>Lançamentos realizados</h2><div class="hint">Aqui você pode abrir, alterar ou excluir qualquer aula já registrada.</div></div>
-<div class="card"><div class="table"><table><thead><tr><th>Data</th><th>Dia</th><th>Horário</th><th>Disciplina</th><th>Faltas</th><th>Ações</th></tr></thead><tbody id="hist"></tbody></table></div></div>
+<div class="card"><div class="table"><table><thead><tr><th>Data</th><th>Dia</th><th>Bimestre</th><th>Horário</th><th>Disciplina</th><th>Faltas</th><th>Ações</th></tr></thead><tbody id="hist"></tbody></table></div></div>
 </section>
 
 <section id="relatorios" class="tab">
-<div class="card"><h2>Relatório detalhado de faltas</h2><div class="row">
+<div class="card"><h2>Relatórios de frequência</h2>
+<div class="row">
+<div class="field"><label>Bimestre</label><select id="rBim"><option value="">Todos os bimestres</option><option value="1">1º Bimestre</option><option value="2">2º Bimestre</option><option value="3">3º Bimestre</option><option value="4">4º Bimestre</option></select></div>
 <div class="field"><label>Aluno</label><select id="rAluno"></select></div><div class="field"><label>Disciplina</label><select id="rDisc"></select></div><div class="field"><label>De</label><input type="date" id="rIni"></div><div class="field"><label>Até</label><input type="date" id="rFim"></div><button class="btn secondary" id="filtrar">Filtrar</button><button class="btn secondary" id="csv">Exportar CSV</button>
-</div></div>
-<div class="card"><div class="table"><table><thead><tr><th>Data</th><th>Horário</th><th>Disciplina</th><th>Aluno</th></tr></thead><tbody id="rTabela"></tbody></table></div></div>
+</div>
+</div>
+<div class="card"><h2>Frequência por disciplina</h2><div class="hint">Mostra aulas lançadas, presenças, faltas e percentual de frequência. Para uma leitura individual, selecione um aluno acima.</div><div class="table"><table><thead><tr><th>Aluno</th><th>Disciplina</th><th>Aulas</th><th>Presenças</th><th>Faltas</th><th>Frequência</th></tr></thead><tbody id="freqDisc"></tbody></table></div></div>
+<div class="card"><h2>Frequência por dia do aluno</h2><div class="hint">Para o aluno selecionado, cada linha representa um dia com aulas lançadas e informa quantas aulas ele perdeu.</div><div class="table"><table><thead><tr><th>Data</th><th>Dia</th><th>Aulas do dia</th><th>Presenças</th><th>Faltas</th><th>Frequência</th><th>Disciplinas perdidas</th></tr></thead><tbody id="freqDia"></tbody></table></div></div>
+<div class="card"><h2>Detalhamento das faltas</h2><div class="table"><table><thead><tr><th>Data</th><th>Horário</th><th>Disciplina</th><th>Aluno</th></tr></thead><tbody id="rTabela"></tbody></table></div></div>
 <div class="card"><h2>Resumo por disciplina</h2><div class="table"><table><thead><tr><th>Disciplina</th><th>Aulas</th><th>Faltas</th><th>Alunos faltosos</th></tr></thead><tbody id="rResumo"></tbody></table></div></div>
 </section>
 
@@ -117,12 +131,12 @@ function preencherAulas(){
  aulasDia($("data").value).forEach((a)=>{let o=document.createElement("option");o.value=a[0]+"|"+a[1]+"|"+a[2];o.textContent=a[0]+" • "+a[1]+" • "+a[2];sel.appendChild(o)});
  if(!sel.options.length){let o=document.createElement("option");o.value="";o.textContent="Não há aulas para esta data";sel.appendChild(o)}
 }
-$("data").onchange=preencherAulas;preencherAulas();
+$("data").onchange=()=>{preencherAulas();renderStats()};preencherAulas();
 
 function abrirLista(){
  let v=$("aula").value;if(!v){toast("Selecione uma aula.");return}
  let [ordem,time,disc]=v.split("|"),data=$("data").value,id=idRegistro(data,ordem);
- let r=registros.find(x=>x.id===id);editando=id;
+ let r=registros.find(x=>x.id===id);editando=id; $("bimestre").value=r?.bimestre||$("bimestre").value;
  $("listaCard").style.display="block";$("listaTitulo").textContent=(r?"Editar":"Lançar")+" frequência — "+disc;
  $("listaSub").textContent=dia(data)+" • "+dataBR(data)+" • "+ordem+" horário • "+time;
  $("lista").innerHTML="";
@@ -140,7 +154,7 @@ $("marcarTodos").onclick=()=>marcar(true);$("desmarcar").onclick=()=>marcar(fals
 $("salvar").onclick=()=>{
  if(!editando)return;let faltas=[...document.querySelectorAll("#lista .check:checked")].map(x=>x.dataset.nome);
  let [data,ordem]=editando.split("__"),old=registros.find(x=>x.id===editando),parts=$("aula").value.split("|");
- let item={id:editando,data,ordem,time:parts[1],disc:parts[2],faltas};
+ let item={id:editando,data,ordem,time:parts[1],disc:parts[2],bimestre:Number($("bimestre").value),faltas};
  let i=registros.findIndex(x=>x.id===editando);if(i>=0)registros[i]=item;else registros.push(item);
  salvar();toast("Lançamento salvo com sucesso.");render();
 };
@@ -148,18 +162,39 @@ $("salvar").onclick=()=>{
 function salvar(){registros.sort((a,b)=>(a.data+a.ordem).localeCompare(b.data+b.ordem));localStorage.setItem(KEY,JSON.stringify(registros))}
 function renderStats(){
  $("nAlunos").textContent=alunos.length;$("nFaltas").textContent=registros.reduce((s,r)=>s+r.faltas.length,0);
- $("nDias").textContent=new Set(registros.map(r=>r.data)).size;$("nAulas").textContent=registros.length
+ $("nDias").textContent=new Set(registros.map(r=>r.data)).size;$("nAulas").textContent=registros.length;
+ let dr=registros.filter(r=>r.data===$("data").value);$("nPerdidasDia").textContent=dr.reduce((s,r)=>s+r.faltas.length,0);
+ let ds=$("diaResumo");ds.style.display=dr.length?"block":"none";$("diaAulas").textContent=dr.length;$("diaFaltas").textContent=dr.reduce((s,r)=>s+r.faltas.length,0);$("diaAlunos").textContent=new Set(dr.flatMap(r=>r.faltas)).size;
 }
 function renderHistorico(){
  let tb=$("hist");tb.innerHTML="";
- if(!registros.length){tb.innerHTML='<tr><td colspan="6" class="empty">Nenhum lançamento realizado.</td></tr>';return}
+ if(!registros.length){tb.innerHTML='<tr><td colspan="7" class="empty">Nenhum lançamento realizado.</td></tr>';return}
  registros.forEach(r=>{
-  tb.innerHTML+=`<tr><td>${dataBR(r.data)}</td><td>${dia(r.data)}</td><td>${r.ordem} • ${r.time}</td><td class="name">${r.disc}</td><td><span class="badge ${r.faltas.length?"bred":"bgreen"}">${r.faltas.length}</span></td><td class="actions"><button class="mini secondary" onclick="editar('${r.id}')">Editar</button><button class="mini danger" onclick="excluir('${r.id}')">Excluir</button></td></tr>`
+  tb.innerHTML+=`<tr><td>${dataBR(r.data)}</td><td>${dia(r.data)}</td><td>${r.bimestre}º</td><td>${r.ordem} • ${r.time}</td><td class="name">${r.disc}</td><td><span class="badge ${r.faltas.length?"bred":"bgreen"}">${r.faltas.length}</span></td><td class="actions"><button class="mini secondary" onclick="editar('${r.id}')">Editar</button><button class="mini danger" onclick="excluir('${r.id}')">Excluir</button></td></tr>`
  })
 }
 window.editar=id=>{let r=registros.find(x=>x.id===id);$("data").value=r.data;preencherAulas();$("aula").value=r.ordem+"|"+r.time+"|"+r.disc;document.querySelector('[data-tab="lancar"]').click();abrirLista()};
 window.excluir=id=>{if(confirm("Excluir este lançamento?")){registros=registros.filter(x=>x.id!==id);salvar();render();toast("Lançamento excluído.")}};
 
+function renderFrequency(base,selectedAluno){
+ let fd=$("rDisc").value;
+ let alunosRel=selectedAluno?[selectedAluno]:alunos;
+ let rows=[];
+ alunosRel.forEach(n=>{
+   disciplinas.filter(d=>!fd||d===fd).forEach(d=>{
+     let rs=base.filter(r=>r.disc===d),a=rs.length,f=rs.filter(r=>r.faltas.includes(n)).length,p=a-f,tx=a?Math.round(p/a*100):0;
+     if(a)rows.push(`<tr><td class="name">${n}</td><td>${d}</td><td>${a}</td><td>${p}</td><td>${f}</td><td><span class="badge ${tx>=75?"bgreen":"bred"}">${tx}%</span></td></tr>`);
+   });
+ });
+ $("freqDisc").innerHTML=rows.length?rows.join(""):'<tr><td colspan="6" class="empty">Selecione um aluno para visualizar a frequência por disciplina.</td></tr>';
+ let dias=[...new Set(base.map(r=>r.data))].sort();
+ if(!selectedAluno){$("freqDia").innerHTML='<tr><td colspan="7" class="empty">Selecione um aluno para visualizar a frequência por dia.</td></tr>';return}
+ $("freqDia").innerHTML=dias.map(data=>{
+   let rs=base.filter(r=>r.data===data),a=rs.length,f=rs.filter(r=>r.faltas.includes(selectedAluno)).length,p=a-f,tx=a?Math.round(p/a*100):0;
+   let perd=rs.filter(r=>r.faltas.includes(selectedAluno)).map(r=>r.disc).join(", ")||"—";
+   return `<tr><td>${dataBR(data)}</td><td>${dia(data)}</td><td>${a}</td><td>${p}</td><td>${f}</td><td><span class="badge ${tx>=75?"bgreen":"bred"}">${tx}%</span></td><td>${perd}</td></tr>`
+ }).join("")||'<tr><td colspan="7" class="empty">Nenhum dia registrado.</td></tr>';
+}
 function filtros(){
  let oldA=$("rAluno").value,oldD=$("rDisc").value;
  $("rAluno").innerHTML='<option value="">Todos os alunos</option>'+alunos.map(n=>`<option>${n}</option>`).join("");
@@ -167,16 +202,18 @@ function filtros(){
  $("rAluno").value=oldA;$("rDisc").value=oldD
 }
 function renderRel(){
- let fa=$("rAluno").value,fd=$("rDisc").value,ini=$("rIni").value,fim=$("rFim").value,rows=[];
- registros.forEach(r=>r.faltas.forEach(n=>{if(fa&&n!==fa)return;if(fd&&r.disc!==fd)return;if(ini&&r.data<ini)return;if(fim&&r.data>fim)return;rows.push([r.data,r.time,r.disc,n])}));
+ let rb=$("rBim").value,fa=$("rAluno").value,fd=$("rDisc").value,ini=$("rIni").value,fim=$("rFim").value,rows=[];
+ registros.forEach(r=>r.faltas.forEach(n=>{if(rb&&String(r.bimestre)!==String(rb))return;if(fa&&n!==fa)return;if(fd&&r.disc!==fd)return;if(ini&&r.data<ini)return;if(fim&&r.data>fim)return;rows.push([r.data,r.time,r.disc,n])}));
  rows.sort((a,b)=>(a[0]+a[3]).localeCompare(b[0]+b[3]));
  $("rTabela").innerHTML=rows.length?rows.map(x=>`<tr><td>${dataBR(x[0])}</td><td>${x[1]}</td><td>${x[2]}</td><td class="name">${x[3]}</td></tr>`).join(""):'<tr><td colspan="4" class="empty">Nenhuma falta encontrada.</td></tr>';
- $("rResumo").innerHTML=disciplinas.map(d=>{let rs=registros.filter(r=>r.disc===d),f=rs.reduce((s,r)=>s+r.faltas.length,0),p=new Set(rs.flatMap(r=>r.faltas)).size;return `<tr><td class="name">${d}</td><td>${rs.length}</td><td>${f}</td><td>${p}</td></tr>`}).join("")
+ let base=registros.filter(r=>(!rb||String(r.bimestre)===String(rb))&&(!ini||r.data>=ini)&&(!fim||r.data<=fim)&&(!fd||r.disc===fd));
+$("rResumo").innerHTML=disciplinas.filter(d=>!fd||d===fd).map(d=>{let rs=base.filter(r=>r.disc===d),f=rs.reduce((s,r)=>s+r.faltas.length,0),p=new Set(rs.flatMap(r=>r.faltas)).size;return `<tr><td class="name">${d}</td><td>${rs.length}</td><td>${f}</td><td>${p}</td></tr>`}).join("");
+renderFrequency(base,fa);
 }
 $("filtrar").onclick=renderRel;
 $("csv").onclick=()=>{
- let rows=[["Data","Dia","Horário","Disciplina","Aluno"]];
- registros.forEach(r=>r.faltas.forEach(n=>rows.push([r.data,dia(r.data),r.time,r.disc,n])));
+ let rows=[["Data","Dia","Bimestre","Horário","Disciplina","Aluno"]];
+ registros.forEach(r=>r.faltas.forEach(n=>rows.push([r.data,dia(r.data),r.bimestre+"º",r.time,r.disc,n])));
  let csv=rows.map(r=>r.map(x=>`"${String(x).replaceAll('"','""')}"`).join(";")).join("\n"),blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="faltas_7ano_702.csv";a.click()
 };
 function renderAlunos(){
