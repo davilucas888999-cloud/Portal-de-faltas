@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#243b64">
+<title>Frequência — 7º Ano 702</title>
+<style>
+:root{
+  --primary:#243b64; --primary2:#35598e; --accent:#d9b45b;
+  --bg:#f4f6fa; --card:#fff; --text:#202936; --muted:#687386;
+  --line:#dfe4ec; --danger:#c74343; --ok:#2e7d5b; --shadow:0 5px 20px rgba(25,40,65,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:22px 18px 20px;box-shadow:var(--shadow)}
+.header-inner{max-width:1180px;margin:auto}
+.school{font-size:13px;letter-spacing:.5px;opacity:.9;font-weight:700}
+h1{margin:5px 0 4px;font-size:25px}
+.subtitle{opacity:.9;font-size:14px}
+nav{max-width:1180px;margin:0 auto;display:flex;gap:8px;padding:12px 0 0;overflow:auto}
+nav button{border:0;background:rgba(255,255,255,.12);color:#fff;padding:10px 14px;border-radius:9px;white-space:nowrap}
+nav button.active{background:#fff;color:var(--primary);font-weight:700}
+main{max-width:1180px;margin:20px auto;padding:0 14px}
+.tab{display:none}.tab.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.stat .label{color:var(--muted);font-size:12px;text-transform:uppercase;font-weight:700}
+.stat .value{font-size:27px;font-weight:800;margin-top:5px;color:var(--primary)}
+.section-title{margin:0 0 14px;font-size:19px}
+.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:6px;min-width:150px;flex:1}
+label{font-size:12px;color:var(--muted);font-weight:700}
+input,select{width:100%;border:1px solid #cfd6e1;border-radius:9px;padding:10px 11px;background:#fff;color:var(--text)}
+.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:700}
+.primary{background:var(--primary);color:#fff}.secondary{background:#eef2f7;color:var(--primary)}
+.danger{background:#fbeaea;color:var(--danger)}
+.ok{background:#eaf6f0;color:var(--ok)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:11px}
+table{border-collapse:collapse;width:100%;min-width:720px;background:#fff}
+th,td{border-bottom:1px solid var(--line);padding:10px 9px;text-align:left;font-size:13px}
+th{background:#f0f3f8;color:#46536a;font-size:11px;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+.name{font-weight:700}
+.absent-row{background:#fff7f7}
+.check{width:20px;height:20px;accent-color:var(--danger)}
+.badge{display:inline-block;border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;background:#eef2f7;color:#566277}
+.badge.red{background:#fbeaea;color:var(--danger)}
+.badge.green{background:#eaf6f0;color:var(--ok)}
+.schedule{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.day{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.day h3{margin:0;padding:11px;background:#eef2f7;color:var(--primary);font-size:14px}
+.lesson{padding:10px;border-top:1px solid var(--line);font-size:12px}
+.lesson b{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+.help{color:var(--muted);font-size:13px;line-height:1.5}
+.toast{position:fixed;bottom:18px;right:18px;background:#202936;color:#fff;padding:12px 16px;border-radius:9px;display:none;z-index:5}
+footer{max-width:1180px;margin:30px auto;padding:0 14px 25px;color:var(--muted);font-size:12px}
+.modal{display:none;position:fixed;inset:0;background:rgba(10,20,35,.48);z-index:10;padding:15px;overflow:auto}
+.modal.open{display:flex;align-items:center;justify-content:center}
+.modal-box{background:#fff;width:min(850px,100%);max-height:90vh;overflow:auto;border-radius:15px;padding:18px}
+.close{float:right;border:0;background:#eef2f7;border-radius:50%;width:34px;height:34px}
+@media(max-width:800px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .schedule{grid-template-columns:1fr}
+ h1{font-size:21px}
+}
+@media(max-width:500px){
+ main{padding:0 9px;margin-top:12px}
+ .grid{grid-template-columns:1fr 1fr;gap:9px}
+ .card{padding:12px}
+ .stat .value{font-size:22px}
+ .row>*{min-width:100%}
+ .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="school">ESCOLA MUNICIPAL “DR. CUSTÓDIO DE PAULA RODRIGUES”</div>
+    <h1>Controle de Frequência — 7º ANO • 702</h1>
+    <div class="subtitle">Matutino • Registro diário de faltas por disciplina</div>
+    <nav>
+      <button class="active" data-tab="lancar">Lançar frequência</button>
+      <button data-tab="relatorio">Relatórios</button>
+      <button data-tab="alunos">Alunos</button>
+      <button data-tab="horario">Horário</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section id="lancar" class="tab active">
+  <div class="grid" style="margin-bottom:14px">
+    <div class="card stat"><div class="label">Alunos</div><div class="value" id="statAlunos">16</div></div>
+    <div class="card stat"><div class="label">Faltas lançadas</div><div class="value" id="statFaltas">0</div></div>
+    <div class="card stat"><div class="label">Dias registrados</div><div class="value" id="statDias">0</div></div>
+    <div class="card stat"><div class="label">Aulas registradas</div><div class="value" id="statAulas">0</div></div>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Novo lançamento do dia</h2>
+    <p class="help">Escolha a data e uma aula do horário. Depois marque somente os alunos que faltaram. O lançamento fica salvo automaticamente neste navegador.</p>
+    <div class="row">
+      <div class="field"><label>Data</label><input type="date" id="data"></div>
+      <div class="field"><label>Aula / disciplina</label><select id="aula"></select></div>
+      <button class="btn primary" id="carregar">Carregar lista</button>
+    </div>
+  </div>
+
+  <div class="card" id="listaCard" style="margin-top:14px;display:none">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div>
+        <h2 class="section-title" id="tituloLista" style="margin-bottom:4px">Frequência</h2>
+        <div class="help" id="subLista"></div>
+      </div>
+      <div class="row" style="align-items:center">
+        <button class="btn secondary" id="todosFaltaram">Marcar todos</button>
+        <button class="btn secondary" id="limpar">Limpar</button>
+        <button class="btn primary" id="salvar">Salvar lançamento</button>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th style="width:55px">Nº</th><th>Aluno</th><th style="width:120px">Faltou?</th><th style="width:150px">Situação</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="relatorio" class="tab">
+  <div class="card">
+    <h2 class="section-title">Relatório de faltas</h2>
+    <div class="row">
+      <div class="field"><label>Aluno</label><select id="fAluno"><option value="">Todos os alunos</option></select></div>
+      <div class="field"><label>Disciplina</label><select id="fDisciplina"><option value="">Todas as disciplinas</option></select></div>
+      <div class="field"><label>Data inicial</label><input type="date" id="fInicio"></div>
+      <div class="field"><label>Data final</label><input type="date" id="fFim"></div>
+      <button class="btn secondary" id="filtrar">Aplicar filtros</button>
+      <button class="btn secondary" id="exportar">Exportar CSV</button>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Data</th><th>Dia</th><th>Disciplina</th><th>Aluno</th><th>Situação</th></tr></thead>
+        <tbody id="relTbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h2 class="section-title">Resumo por disciplina</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Disciplina</th><th>Aulas registradas</th><th>Faltas</th><th>Alunos com falta</th></tr></thead>
+        <tbody id="resumoTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="alunos" class="tab">
+  <div class="card">
+    <h2 class="section-title">7º ANO — 702 • Lista de alunos</h2>
+    <p class="help">A lista está em ordem alfabética. O total individual considera todos os lançamentos salvos.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nº</th><th>Aluno</th><th>Total de faltas</th><th>Disciplinas com falta</th></tr></thead>
+        <tbody id="alunosTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="horario" class="tab">
+  <div class="card">
+    <h2 class="section-title">Horário semanal — 702 Matutino</h2>
+    <div class="schedule" id="schedule"></div>
+  </div>
+</section>
+</main>
+
+<footer>Controle de frequência local • 7º ANO 702 • Os dados ficam armazenados no navegador deste dispositivo.</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const alunos = [
+"ADRYAN MENDES LIMA","DAVI LUCAS PAULINO DA COSTA","DAVI LUCAS MONTEIRO ROZA","DAVI QUEIROZ SILVA",
+"EMANUEL GOMES DE QUEIROZ","EDYLSON ANTÔNIO DO CARMO SOARES","JÚLIA DE OLIVEIRA PEREIRA","JOÃO VITOR DE ARAÚJO OLIVEIRA",
+"LUCAS ESTEVAN DE QUEIROZ FREITAS","LUIZ MIGUEL DE QUEIROZ FREITAS","MARIA LUIZA PEREIRA SAMPAIO","MARIA PAULA ALVES PEREIRA",
+"MELLYNA VITÓRIA S. DE MELO","NATHAN FIALHO LIMA","RILLARY VITÓRIA APARECIDA DA SILVA SALGADO","VICTOR GABRIEL QUEIROZ SANTOS"
+].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+
+const horario = {
+"Segunda-feira":[["07:00 - 07:50","Arte"],["07:50 - 08:40","História"],["08:40 - 09:30","Português"],["09:50 - 10:40","Ed. Física"],["10:40 - 11:30","Português"]],
+"Terça-feira":[["07:00 - 07:50","Matemática"],["07:50 - 08:40","Ciências"],["08:40 - 09:30","Português"],["09:50 - 10:40","Geografia"],["10:40 - 11:30","Matemática"]],
+"Quarta-feira":[["07:00 - 07:50","Português"],["07:50 - 08:40","Matemática"],["08:40 - 09:30","História"],["09:50 - 10:40","Ciências"],["10:40 - 11:30","Inglês"]],
+"Quinta-feira":[["07:00 - 07:50","Geografia"],["07:50 - 08:40","Inglês"],["08:40 - 09:30","Matemática"],["09:50 - 10:40","História"],["10:40 - 11:30","Ciências"]],
+"Sexta-feira":[["07:00 - 07:50","Português"],["07:50 - 08:40","Matemática"],["08:40 - 09:30","Redação"],["09:50 - 10:40","Ed. Física"],["10:40 - 11:30","Ens. Religioso"]]
+};
+
+const key="frequencia_702_2026_v1";
+let registros=JSON.parse(localStorage.getItem(key)||"[]");
+const $=id=>document.getElementById(id);
+
+function isoHoje(){
+ const d=new Date(); const off=d.getTimezoneOffset(); const x=new Date(d.getTime()-off*60000); return x.toISOString().slice(0,10);
+}
+$("data").value=isoHoje();
+
+function disciplinas(){return [...new Set(Object.values(horario).flat().map(x=>x[1]))].sort((a,b)=>a.localeCompare(b,'pt-BR'))}
+function diaSemana(data){return new Date(data+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long'})}
+function normalDia(data){return new Date(data+"T12:00:00").toLocaleDateString('pt-BR',{weekday:'long'}).replace(/^./,c=>c.toUpperCase())}
+
+function aulasDoDia(data){
+ const dia=new Date(data+"T12:00:00").toLocaleDateString('pt-BR',{weekday:'long'});
+ const nome=dia.replace(/^./,c=>c.toUpperCase());
+ return horario[nome]||[];
+}
+function preencherAulas(){
+ const sel=$("aula"); sel.innerHTML="";
+ aulasDoDia($("data").value).forEach((a,i)=>{const o=document.createElement("option");o.value=a[1]+"|"+a[0];o.textContent=(i+1)+"º • "+a[0]+" • "+a[1];sel.appendChild(o)});
+ if(!sel.options.length) {const o=document.createElement("option");o.textContent="Sem aula cadastrada para esta data";o.value="";sel.appendChild(o)}
+}
+$("data").addEventListener("change",preencherAulas); preencherAulas();
+
+function showToast(msg){const t=$("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2200)}
+function registroId(data,disc){return data+"__"+disc}
+function montarLista(){
+ const data=$("data").value, val=$("aula").value;
+ if(!val){showToast("Selecione uma aula.");return}
+ const [disc,time]=val.split("|");
+ const r=registros.find(x=>x.id===registroId(data,disc));
+ $("listaCard").style.display="block";
+ $("tituloLista").textContent="Frequência — "+disc;
+ $("subLista").textContent=normalDia(data)+" • "+data.split("-").reverse().join("/")+" • "+time;
+ const tb=$("tbody");tb.innerHTML="";
+ alunos.forEach((nome,i)=>{
+   const faltou=r?r.faltas.includes(nome):false;
+   const tr=document.createElement("tr"); if(faltou)tr.className="absent-row";
+   tr.innerHTML=`<td>${i+1}</td><td class="name">${nome}</td><td><input class="check" type="checkbox" data-nome="${nome}" ${faltou?"checked":""}></td><td><span class="badge ${faltou?"red":"green"}">${faltou?"FALTA":"PRESENTE"}</span></td>`;
+   tr.querySelector("input").addEventListener("change",e=>{tr.classList.toggle("absent-row",e.target.checked);tr.querySelector(".badge").className="badge "+(e.target.checked?"red":"green");tr.querySelector(".badge").textContent=e.target.checked?"FALTA":"PRESENTE"});
+   tb.appendChild(tr);
+ });
+}
+$("carregar").onclick=montarLista;
+$("todosFaltaram").onclick=()=>document.querySelectorAll("#tbody .check").forEach(c=>{c.checked=true;c.dispatchEvent(new Event("change"))});
+$("limpar").onclick=()=>document.querySelectorAll("#tbody .check").forEach(c=>{c.checked=false;c.dispatchEvent(new Event("change"))});
+$("salvar").onclick=()=>{
+ const data=$("data").value,val=$("aula").value;if(!val)return;
+ const [disc,time]=val.split("|");const faltas=[...document.querySelectorAll("#tbody .check:checked")].map(x=>x.dataset.nome);
+ const id=registroId(data,disc); const item={id,data,disc,time,faltas};
+ const idx=registros.findIndex(x=>x.id===id); if(idx>=0)registros[idx]=item;else registros.push(item);
+ registros.sort((a,b)=>(a.data+a.disc).localeCompare(b.data+b.disc));
+ localStorage.setItem(key,JSON.stringify(registros));atualizar();showToast("Lançamento salvo.");
+};
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));$(b.dataset.tab).classList.add("active");atualizar();
+});
+
+function atualizarStats(){
+ $("statAlunos").textContent=alunos.length;
+ $("statFaltas").textContent=registros.reduce((s,r)=>s+r.faltas.length,0);
+ $("statDias").textContent=new Set(registros.map(r=>r.data)).size;
+ $("statAulas").textContent=registros.length;
+}
+function atualizarAlunos(){
+ const tb=$("alunosTbody");tb.innerHTML="";
+ alunos.forEach((nome,i)=>{
+   const rs=registros.filter(r=>r.faltas.includes(nome));const ds=[...new Set(rs.map(r=>r.disc))];
+   tb.innerHTML+=`<tr><td>${i+1}</td><td class="name">${nome}</td><td><span class="badge ${rs.length?"red":"green"}">${rs.length}</span></td><td>${ds.length?ds.join(", "):"—"}</td></tr>`;
+ });
+}
+function atualizarRelatorio(){
+ const fa=$("fAluno").value,fd=$("fDisciplina").value,ini=$("fInicio").value,fim=$("fFim").value;
+ let rows=[];
+ registros.forEach(r=>r.faltas.forEach(nome=>{
+   if(fa&&nome!==fa||fd&&r.disc!==fd||ini&&r.data<ini||fim&&r.data>fim)return;
+   rows.push({data:r.data,dia:normalDia(r.data),disc:r.disc,nome});
+ }));
+ rows.sort((a,b)=>(a.data+a.nome).localeCompare(b.data+b.nome));
+ $("relTbody").innerHTML=rows.length?rows.map(x=>`<tr><td>${x.data.split("-").reverse().join("/")}</td><td>${x.dia}</td><td>${x.disc}</td><td class="name">${x.nome}</td><td><span class="badge red">FALTA</span></td></tr>`).join(""):`<tr><td colspan="5" class="empty">Nenhuma falta encontrada.</td></tr>`;
+ const tb=$("resumoTbody");tb.innerHTML="";
+ disciplinas().forEach(d=>{
+   const rs=registros.filter(r=>r.disc===d), faltas=rs.reduce((s,r)=>s+r.faltas.length,0), pessoas=new Set(rs.flatMap(r=>r.faltas));
+   tb.innerHTML+=`<tr><td class="name">${d}</td><td>${rs.length}</td><td>${faltas}</td><td>${pessoas.size}</td></tr>`;
+ });
+}
+function atualizarFiltros(){
+ $("fAluno").innerHTML='<option value="">Todos os alunos</option>'+alunos.map(n=>`<option>${n}</option>`).join("");
+ $("fDisciplina").innerHTML='<option value="">Todas as disciplinas</option>'+disciplinas().map(n=>`<option>${n}</option>`).join("");
+}
+function renderSchedule(){
+ $("schedule").innerHTML=Object.entries(horario).map(([dia,aulas])=>`<div class="day"><h3>${dia}</h3>${aulas.map((a,i)=>`<div class="lesson"><b>${i+1}º • ${a[0]}</b>${a[1]}</div>`).join("")}</div>`).join("");
+}
+$("filtrar").onclick=atualizarRelatorio;
+$("exportar").onclick=()=>{
+ let rows=[["Data","Dia","Disciplina","Aluno","Situação"]];
+ registros.forEach(r=>r.faltas.forEach(n=>rows.push([r.data,normalDia(r.data),r.disc,n,"FALTA"])));
+ const csv=rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(";")).join("\\n");
+ const blob=new Blob(["\\ufeff"+csv],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="faltas_7ano_702.csv";a.click();URL.revokeObjectURL(a.href);
+};
+function atualizar(){atualizarStats();atualizarAlunos();atualizarRelatorio();renderSchedule()}
+atualizarFiltros();atualizar();
+
+</script>
+</body>
+</html>
